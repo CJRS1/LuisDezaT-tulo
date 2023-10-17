@@ -1,0 +1,204 @@
+/* Estilo para el contenedor principal */
+.calibration-stage {
+    display: flex;
+    flex-direction: column;
+    /* Cambiamos de columna a fila para que los elementos estén en línea horizontal */
+    align-items: center;
+    justify-content: center;
+    /* Añadimos espacio entre los contenedores */
+    width: 100%;
+    /* Ancho total (ajusta según tus necesidades) */
+    height: 100%;
+}
+
+.App {
+    height: 100vh;
+}
+
+.App-header {
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 20px 0 20px;
+}
+
+/* Estilo para el contenedor del Slider y el valor seleccionado */
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    /* Ancho del contenedor izquierdo (ajusta según tus necesidades) */
+    margin-top: 20px;
+}
+
+.graphis_container {
+    width: 830px !important;
+    height: 290px !important;
+    box-shadow: 0 2px 4px black;
+    border-radius: 8px;
+    padding: 0 30px 80px 30px;
+    // margin: 30px;
+}
+
+tspan {
+    z-index: 10 !important;
+}
+
+text {
+
+    z-index: 10 !important;
+}
+
+.recharts-surface {
+    height: 400px !important;
+}
+
+.left-container {
+    width: 500px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px black;
+    border-radius: 8px;
+    padding: 10px 30px 30px 30px;
+    margin: 15px;
+}
+
+.right-container {
+    width: 500px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px black;
+    border-radius: 8px;
+    padding: 10px 30px 30px 30px;
+    margin: 15px;
+}
+
+/* Estilo para centrar el texto en el TextField */
+.duration-input {
+    text-align: center !important;
+    margin-top: 30px !important;
+}
+
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    text-align: center;
+}
+
+
+/* Estilo para el contenedor de la duración y el botón de inicio */
+.duration-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    margin-top: 20px;
+}
+
+/* Estilo para el botón de "Iniciar terapia" */
+.calibration-stage .start-button {
+    margin-top: 15px;
+    width: 200px;
+    background: #32CD32;
+    color: white;
+    // transition: transform 0.5s;
+}
+
+.calibration-stage:hover .start-button:hover {
+    background-color: #009933;
+    animation: scale 0.5s infinite alternate;
+}
+
+@keyframes scale {
+    0% {
+        transform: scale(1);
+        /* Escala inicial, sin cambio */
+    }
+
+    100% {
+        transform: scale(1.1);
+        /* Escala al 120% del tamaño original */
+    }
+}
+
+/* Estilo para la sección de resultados */
+.results-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px black;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+/* Estilo para los botones dentro de la sección de resultados */
+.results-section button {
+    margin-top: 10px;
+}
+
+/* Estilo para la sección de error */
+.error-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    border: 1px solid #dc3545;
+    border-radius: 8px;
+    padding: 20px;
+    color: #dc3545;
+}
+
+/* Estilo para el mensaje de error */
+.error-message {
+    font-weight: bold;
+}
+
+/* Estilo para el botón del mensaje de error */
+.error-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.css-1aznpnh-MuiSlider-root {
+    color: #009933 !important;
+}
+
+.button_result_container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+
+    button {
+        width: 35%;
+        background: #32CD32;
+        color: white;
+    }
+
+    button:hover {
+        background-color: #009933;
+        animation: scale 0.5s infinite alternate;
+    }
+}
