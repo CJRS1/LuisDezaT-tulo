@@ -42,7 +42,7 @@
     height: 290px !important;
     box-shadow: 0 2px 4px black;
     border-radius: 8px;
-    padding: 0 30px 80px 30px;
+    padding: 30px 20px 30px 20px;
     // margin: 30px;
 }
 
@@ -201,4 +201,10 @@ text {
         background-color: #009933;
         animation: scale 0.5s infinite alternate;
     }
+}
+
+.resultados{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }

@@ -1,7 +1,7 @@
 // Login.js
 import React, { useState } from 'react';
 // Importa el archivo SCSS en tu componente
-import { Slider, Button, TextField, Alert } from '@mui/material';
+import {TextField } from '@mui/material';
 import '../style/Login.css';
 
 
@@ -16,6 +16,8 @@ const Login = ({ onLoginSuccess }) => {
     const [email, setEmail] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
 
+    console.log(loggedIn);
+    
     const handleLogin = () => {
         if (username === 'LuisDeza' && password === '123456') {
             alert('Inicio de sesión exitoso');

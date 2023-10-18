@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Slider, Button, TextField, Alert } from '@mui/material';
+import { Slider, Button, TextField } from '@mui/material';
+import { XYPlot, XAxis, YAxis, LineSeries } from 'react-vis';
 
-import TherapyChart from './TherapyChart'
-
+import '../style/Terapia.css';
 import '../style/Terapia.css';
 
 const CalibrationStage = () => {
@@ -12,24 +12,35 @@ const CalibrationStage = () => {
     const [showResults, setShowResults] = useState(false);
     const [results, setResults] = useState(null);
     const [therapyStarted, setTherapyStarted] = useState(false);
+    const [paused, setPaused] = useState(false);
 
+    const maxIntensity = 20;
+    console.log(graphData);
     useEffect(() => {
-        // Generar datos de la gráfica
         const data = [];
+        const transitionTime = 10; // Tiempo en segundos para la transición de 1 a 20
+        const transitionSteps = (duration * 60) / transitionTime;
+        const stepsToMax = (duration * 60) * 0.8;
+
         for (let i = 0; i < duration * 60; i++) {
-            if (i < duration * 60 * 0.8) {
-                data.push({
-                    time: i / (duration * 60),
-                    intensity: value,
-                });
+            let currentIntensity = value;
+            if (i < stepsToMax) {
+                if (value < maxIntensity) {
+                    currentIntensity = (i / transitionSteps) * (maxIntensity - value) + value;
+                }
             } else {
-                data.push({
-                    time: i / (duration * 60),
-                    intensity: 20,
-                });
+                currentIntensity = maxIntensity;
             }
+            data.push({
+                time: i / (duration * 60),
+                intensity: currentIntensity < 0 ? 0 : currentIntensity, // Asegurarse de que no haya valores negativos
+            });
         }
-        setGraphData(data);
+
+        const firstSlopeData = data.slice(0, stepsToMax);
+        const secondSlopeData = data.slice(stepsToMax);
+
+        setGraphData([firstSlopeData, secondSlopeData]);
     }, [duration, value]);
 
     const showError = () => {
@@ -59,28 +70,71 @@ const CalibrationStage = () => {
     };
 
     const stopTherapy = () => {
+        setPaused(true);
         setShowResults(true);
-
         setResults({
             ...results,
-            percentage: 50,
+            percentage: percentageProgress,
         });
+    };
+
+    const resumeTherapy = () => {
+        setPaused(false);
     };
 
     const finishTherapy = () => {
         setGraphData([]);
         setResults(null);
         setShowResults(false);
-
         setTherapyStarted(false);
+        setPaused(false);
+        setCurrentIndex(0);
+        setValue(1);
+        setDuration(1);
     };
+
+    const timeAssigned = (duration * 60) * 0.8;
+    const timeAssignedData = new Array(timeAssigned).fill(value);
+
+    const timeRemaining = (duration * 60) * 0.2;
+    const timeRemainingData = new Array(timeRemaining).fill(20);
+
+    const data = [...timeAssignedData, ...timeRemainingData];
+
+    const labels = new Array(duration * 60).fill(null).map((_, index) => index / 60);
+
+    const chartData = labels.map((label, index) => ({
+        time: label,
+        current: data[index],
+    }));
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        let timeout;
+        if (!paused && currentIndex < chartData.length - 1) {
+            timeout = setTimeout(() => {
+                setCurrentIndex(currentIndex + 1);
+            }, 1000);
+        }
+    
+        return () => clearTimeout(timeout);
+    }, [paused, currentIndex, chartData]);
+
+    const currentData = chartData.slice(0, currentIndex + 1);
+
+    const timeElapsed = (currentIndex + 1) / 60;
+    const intensityInProgress = currentData[currentIndex].current;
+
+    const percentageProgress = Math.min(((currentIndex + 1) / (chartData.length - 1)) * 100, 100);
+
 
     return (
         <div className="calibration-stage">
             <div className="container">
                 <div className="left-container">
                     <h2>Etapa de calibración</h2>
-                    <p className="slider-value">Mostrar valor (mA): {value}</p>
+                    <p className="slider-value"><strong>Mostrar valor:</strong> {value} <strong>mA</strong></p>
                     <Slider
                         value={value}
                         onChange={(event, newValue) => setValue(newValue)}
@@ -114,22 +168,50 @@ const CalibrationStage = () => {
                 {showResults && (
                     <div className="right-container">
                         <h2>Resultados</h2>
-                        <p>Intensidad de aplicación: {results?.intensity} mA</p>
-                        <p>Tiempo de la sesión: {results?.time} min</p>
-                        <p>Estado de la terapia: {results?.percentage} %</p>
+                        <div className="resultados">
+                            <p><strong>Intensidad de aplicación:</strong> {value} <strong>mA</strong></p>
+                            <p><strong>Tiempo de la sesión:</strong> {duration} <strong>min</strong></p>
+                        </div>
+                        <div className="resultados">
+                            <p><strong>Intensidad en el transcurso:</strong> {intensityInProgress.toFixed(1)} <strong>mA</strong></p>
+                            <p><strong>Tiempo transcurrido:</strong> {timeElapsed.toFixed(1)} <strong>min</strong></p>
+                        </div>
+                        <p><strong>Estado de la terapia:</strong> {percentageProgress.toFixed(2)} <strong>%</strong></p>
                         <div className="button_result_container">
-                            <Button onClick={stopTherapy} disabled={!therapyStarted}>
-                                Detener terapia
-                            </Button>
+                            {paused ? (
+                                <Button onClick={resumeTherapy} disabled={!therapyStarted}>
+                                    Reanudar terapia
+                                </Button>
+                            ) : (
+                                <Button onClick={stopTherapy} disabled={!therapyStarted}>
+                                    Detener terapia
+                                </Button>
+                            )}
                             <Button className="finish-button" onClick={finishTherapy} disabled={!therapyStarted}>
                                 Finalizar terapia
                             </Button>
                         </div>
                     </div>
                 )}
+
             </div>
             {showResults && (
-                <TherapyChart value={value} duration={duration} />
+                <div className="graphis_container">
+                    <XYPlot width={800} height={280} xDomain={[0, currentData.length]} yDomain={[0, 20]}>
+                        <LineSeries
+                            data={currentData.map((dataPoint, index) => ({
+                                x: index,
+                                y: dataPoint.current,
+                            }))}
+                            style={{
+                                strokeWidth: 2,
+                                fill: 'none', // No rellena el área debajo de la línea
+                            }}
+                        />
+                        <XAxis title="Tiempo (min)" />
+                        <YAxis title="Corriente (mA)" tickValues={[0, 1, 5, 10, 15, 20]} />
+                    </XYPlot>
+                </div>
             )}
         </div>
     );
