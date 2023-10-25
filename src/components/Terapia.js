@@ -117,7 +117,7 @@ const CalibrationStage = () => {
                 setCurrentIndex(currentIndex + 1);
             }, 1000);
         }
-    
+
         return () => clearTimeout(timeout);
     }, [paused, currentIndex, chartData]);
 
@@ -134,7 +134,7 @@ const CalibrationStage = () => {
             <div className="container">
                 <div className="left-container">
                     <h2>Etapa de calibración</h2>
-                    <p className="slider-value"><strong>Mostrar valor:</strong> {value} <strong>mA</strong></p>
+                    <p className="slider-value">Mostrar valor: {value} <strong>mA</strong></p>
                     <Slider
                         value={value}
                         onChange={(event, newValue) => setValue(newValue)}
@@ -179,15 +179,15 @@ const CalibrationStage = () => {
                         <p><strong>Estado de la terapia:</strong> {percentageProgress.toFixed(2)} <strong>%</strong></p>
                         <div className="button_result_container">
                             {paused ? (
-                                <Button onClick={resumeTherapy} disabled={!therapyStarted}>
+                                <Button className="start-button" onClick={resumeTherapy} disabled={!therapyStarted}>
                                     Reanudar terapia
                                 </Button>
                             ) : (
-                                <Button onClick={stopTherapy} disabled={!therapyStarted}>
+                                <Button className="start-button" onClick={stopTherapy} disabled={!therapyStarted}>
                                     Detener terapia
                                 </Button>
                             )}
-                            <Button className="finish-button" onClick={finishTherapy} disabled={!therapyStarted}>
+                            <Button className="start-button" onClick={finishTherapy} disabled={!therapyStarted}>
                                 Finalizar terapia
                             </Button>
                         </div>
@@ -208,8 +208,23 @@ const CalibrationStage = () => {
                                 fill: 'none', // No rellena el área debajo de la línea
                             }}
                         />
-                        <XAxis title="Tiempo (min)" />
-                        <YAxis title="Corriente (mA)" tickValues={[0, 1, 5, 10, 15, 20]} />
+                        <XAxis
+                            title="Tiempo (min)"
+                            style={{
+                                line: { stroke: '#5120d4' },
+                                ticks: { stroke: '#5120d4' },
+                                text: { fill: '#5120d4', fontWeight: 'bold' }
+                            }}
+                        />
+                        <YAxis
+                            title="Corriente (mA)"
+                            tickValues={[0, 1, 5, 10, 15, 20]}
+                            style={{
+                                line: { stroke: '#5120d4' },
+                                ticks: { stroke: '#5120d4' },
+                                text: { fill: '#5120d4', fontWeight: 'bold' }
+                            }}
+                        />
                     </XYPlot>
                 </div>
             )}

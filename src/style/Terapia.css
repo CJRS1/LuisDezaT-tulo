@@ -10,6 +10,7 @@
   width: 100%;
   /* Ancho total (ajusta según tus necesidades) */
   height: 100%;
+  z-index: 10;
 }
 
 .App {
@@ -26,6 +27,7 @@
   align-items: center;
   width: 100%;
   margin: 0 20px 0 20px;
+  z-index: 30 !important;
 }
 
 /* Estilo para el contenedor del Slider y el valor seleccionado */
@@ -44,6 +46,8 @@
   box-shadow: 0 2px 4px black;
   border-radius: 8px;
   padding: 30px 20px 30px 20px;
+  background: white !important;
+  z-index: 30;
 }
 
 tspan {
@@ -60,28 +64,46 @@ text {
 
 .left-container {
   width: 500px;
-  height: 250px;
+  height: 260px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: white;
   box-shadow: 0 2px 4px black;
   border-radius: 8px;
   padding: 10px 30px 30px 30px;
   margin: 15px;
+  z-index: 30 !important;
+}
+.left-container h2 {
+  color: #5120d4;
+  margin-top: 10px;
+  font-size: 25px;
+}
+.left-container p {
+  color: #0dc0a0;
 }
 
 .right-container {
   width: 500px;
-  height: 250px;
+  height: 260px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: white;
   box-shadow: 0 2px 4px black;
   border-radius: 8px;
   padding: 10px 30px 30px 30px;
   margin: 15px;
+  z-index: 30 !important;
+  color: #5120d4;
+}
+.right-container h2 {
+  color: #5120d4;
+  font-weight: bold;
+  font-size: 25px;
 }
 
 /* Estilo para centrar el texto en el TextField */
@@ -107,12 +129,13 @@ text {
 .calibration-stage .start-button {
   margin-top: 15px;
   width: 200px;
-  background: #32CD32;
-  color: white;
+  background: linear-gradient(to top right, rgb(81, 32, 212), rgb(13, 192, 160));
+  color: white !important;
+  font-weight: bold;
 }
 
 .calibration-stage:hover .start-button:hover {
-  background-color: #009933;
+  background: linear-gradient(to top right, rgba(81, 32, 212, 0.85), rgba(13, 192, 160, 0.85));
   animation: scale 0.5s infinite alternate;
 }
 
@@ -138,6 +161,7 @@ text {
   box-shadow: 0 2px 4px black;
   border-radius: 8px;
   padding: 20px;
+  z-index: 30 !important;
 }
 
 /* Estilo para los botones dentro de la sección de resultados */
@@ -177,7 +201,7 @@ text {
 }
 
 .css-1aznpnh-MuiSlider-root {
-  color: #009933 !important;
+  color: #5120d4 !important;
 }
 
 .button_result_container {
@@ -200,4 +224,23 @@ text {
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.rv-xy-plot__axis__title {
+  color: #5120d4 !important;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+g text {
+  color: #5120d4 !important;
+  fill: #5120d4 !important;
+}
+
+.rv-xy-plot__axis--vertical .rv-xy-plot__axis__title {
+  transform: translateX(60px);
+}
+
+.rv-xy-plot__axis--horizontal .rv-xy-plot__axis__title {
+  transform: translateY(-20px);
 }/*# sourceMappingURL=Terapia.css.map */

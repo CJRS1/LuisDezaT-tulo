@@ -2,3 +2,26 @@
 #8BC34A
 #FF5733
 */
+
+.App {
+    background-image: url('./assets/estetica.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.App {
+    position: relative;
+}
+
+.App::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, #5120d4, #0dc0a0);
+    opacity: 0.8; /* Ajusta la opacidad según sea necesario */
+    z-index: 1;
+    mix-blend-mode: multiply; /* Ajusta el modo de mezcla según sea necesario */
+}
