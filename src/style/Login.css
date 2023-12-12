@@ -103,10 +103,21 @@ button:hover {
 }
 
 .iniciar_sesion {
+  z-index: 10 !important;
   width: 70%;
   height: 40px !important;
   margin-top: 10px !important;
   margin-bottom: 30px !important;
+}
+
+.iniciar_sesion label {
+  color: black;
+  font-weight: bold;
+}
+
+/* Cambio de color al enfocar el campo */
+.iniciar_sesion .Mui-focused label {
+  color: black;
 }
 
 @keyframes scale {
